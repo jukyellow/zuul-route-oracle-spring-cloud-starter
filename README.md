@@ -60,6 +60,8 @@ Register `JdbcOperations` bean within your application:
 
 ```java
 @SpringBootApplication
+@EnableEurekaClient
+@EnableZuulProxyStore
 public static class Application {
 
   @Bean
