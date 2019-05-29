@@ -1,4 +1,4 @@
-# zuul-route-jdbc-spring-cloud-starter
+# zuul-route-oracle-spring-cloud-starter
 > A Spring Cloud Oracle-jdbc store for Zuul routes.
 
 
