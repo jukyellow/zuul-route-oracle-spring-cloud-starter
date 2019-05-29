@@ -95,8 +95,8 @@ zuul.store.jdbc.enabled = true
 Configure add application.properties for java source using: 
 
 ``` (2019.05.29,juk) add
-spring.datasource.driverClassName= your-driver
-spring.datasource.url= your-url
+spring.datasource.driverClassName=oracle.jdbc.driver.OracleDriver
+spring.datasource.url=jdbc:oracle:thin:@url:port
 spring.datasource.username= your-user-name
 spring.datasource.password= your-user-password
 spring.datasource.maxActive= your-max-active
