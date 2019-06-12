@@ -4,9 +4,11 @@
 
 ## Features
 
-Extends the Spring Cloud's `DiscoveryClientRouteLocator` with capabilities of loading routes out of the configured jdbc-database(https://github.com/yangtao309/zuul-route-jdbc-spring-cloud-starter) to Oracle-database (zuul 1.4.4).
+Extends the Spring Cloud's `DiscoveryClientRouteLocator` with capabilities of loading routes out of the configured oracle-jdbc-database(zuul version 1.4.4).  
 
-Instead of configuring your routes through `zuul.routes` like follows:
+reference github page: https://github.com/yangtao309/zuul-route-jdbc-spring-cloud-starter  
+
+Instead of configuring your routes through `zuul.routes` like follows:  
 
 ```yaml
 zuul:
@@ -49,7 +51,7 @@ CREATE TABLE zuul_routes(
     path VARCHAR2(500),
     service_id VARCHAR2(50),
     url VARCHAR2(500),
-    strip_prefix char(1),
+    strip_prefix char(1), -- Important! : 1(true) is remove path(prefix) in request-mapping URL, 0(false) is not
     retryable char(1),
     sensitive_headers VARCHAR2(500)    
 );
@@ -124,3 +126,12 @@ zuul.store.jdbc.enabled=true# false by default
 ## License
 
 Apache 2.0
+
+## etc  
+- default database reload interval : 30 seconds  
+- if you want to remove db reload, see below (you can upgrade source code):  
+ 1. add properties (zuul.store.jdbc.manual.refresh=true)  in your zuul-gateway-server  
+ 2. add restcontroller and set @GetMapping("/db/refresh") in your zuul-gateway-server (this method call ManualRefresh.doRefreshDB())
+ 3. add ManualRefresh @configuration class in this zuul-jdbc library (set variable(isManualRefresh) if zuul.store.jdbc.manual.refresh is true)
+ 4. modify StoreRefreshableRouteLocator.locateRoutes method to skip store.findAll() (if ManualRefresh.isManualRefresh is true)  
+ 5. add StoreRefreshableRouteLocator.doRefresh(){ super.doRefresh() } method.  
